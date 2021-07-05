@@ -7,7 +7,7 @@ describe('Universe', () => {
   let universe;
   beforeEach(() => {
     universe = new Universe(WIDTH, HEIGHT);
-  })
+  });
   it('should create an instance', () => {
     expect(universe).toBeTruthy();
   });
@@ -21,7 +21,7 @@ describe('Universe', () => {
     universe.render(ctx);
     expect(cellSpy).toHaveBeenCalledWith(ctx);
   });
-  it('should return cell with specific coordinates', () => {
+  it('getCell should return cell with specific coordinates', () => {
     // arrange
     const expectedX = 0, expectedY = 0;
     // act
@@ -39,5 +39,6 @@ describe('Universe', () => {
     expect(mn[0].y).toEqual(0);
     expect(mn[1].x).toEqual(1);
     expect(mn[1].y).toEqual(0);
-  })
+  });
+  
 });

@@ -21,7 +21,7 @@ export class ScreenComponent implements OnInit {
   ngOnInit(): void {
     this.rick = new Rick(this.audioService);
     this.rick.hide();
-    this.universe = new Universe(32, 8, this.rick);
+    this.universe = new Universe(24, 16, this.rick);
 
     const canvas = document.getElementById('ctx') as HTMLCanvasElement;
     this.ctx = canvas.getContext('2d');
@@ -31,8 +31,8 @@ export class ScreenComponent implements OnInit {
     this.lastTick = Date.now();
     this.render();
     setTimeout(() => {
-      this.rick.portalOut().then(() => {
-        console.log('portal Outed!');
+      this.rick.portalOut(16, 72).then(() => {
+        console.info("I'm here, bithces!");
       });
     }, 333);
   }
@@ -62,7 +62,7 @@ export class ScreenComponent implements OnInit {
       case 'ArrowUp': this.rick.jump(); break;
     }
   }
-
+  // @todo: move all render/canvas related suff to servire or universe class (or create new)
   private render() {
     const dt = Date.now() - this.lastTick;
     const dtt = dt / 1000 * 60;

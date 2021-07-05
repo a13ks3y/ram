@@ -28,7 +28,9 @@ good, it's opposite, so he is also can invent a portal gun, or not, but anyway, 
 another "hidden" universe, they can be easely found by the way latter in adventures, thaat I need to wrote a script for
 it, so I go.
 
-## Usage tbd
+## Usage:
+
+![🧐](https://a13ks3y.github.io/ram/assets/rick-and-morty-31006-256x256.ico)
 
 ## Road Map
 

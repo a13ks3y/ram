@@ -7,8 +7,8 @@ export class Cell {
     static CELL_WIDTH = 72;
     static CELL_HEIGHT = 72;
     private static COLORS: string[] = [
-        '#50ddff', // Air
-        '#f90',    // Ground
+        '#66edff', // Air
+        '#000',    // Ground
         '#00f',    // Water
         '#f00',    // Fire
         '#0f0'     // Uranium

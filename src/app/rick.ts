@@ -28,6 +28,8 @@ export class Rick {
 
     this.x += this.dx / dtt;
     this.y += this.dy / dtt;
+    
+    const featureBottomCell = 'todo';
     switch (this.state) {
       case 'portal':
         this.portalZoom += 0.081;
@@ -39,11 +41,11 @@ export class Rick {
       case 'portal_idle':
         break;
       case 'falling':
+        
         break;
       case 'jumping':
         if (this.jumpStartY - this.y > Rick.SIZE * 8) {
-          console.log('PEPAKA!', this.jumpStartY, this.y);
-          this.state = 'falling';
+          this.setStateFalling();
         }
         break;
     }
@@ -120,7 +122,7 @@ export class Rick {
 
   setStateFalling() {
     this.state = 'falling';
-    this.dy = 5;
+    this.dy = 9;
   }
 
   multiply(numberA: number, numberB: number) {

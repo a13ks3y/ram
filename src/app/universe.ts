@@ -9,6 +9,18 @@ import {of} from "rxjs";
 // "ox" "oy" пусть обозначают относительные координаты (от левого верхнего угла канвы)
 // "cx" "cy" пусть будут координатами центра (в остальных случаях левый верхний угол)
 
+
+// @todo: move it to Cell.ts, make export
+const CELL_TYPES = [
+  CellType.Air,
+  CellType.Air,
+  CellType.Air,
+  CellType.Ground,
+  CellType.Ground,
+  CellType.Fire,
+  CellType.Uranium
+];
+
 export class Universe {
   private width: number;
   private height: number;
@@ -18,21 +30,12 @@ export class Universe {
     this.height = initialHeight;
     this.rick = rick;
 
-    const CELL_TYPES = [
-      CellType.Air,
-      CellType.Air,
-      CellType.Air,
-      CellType.Ground,
-      CellType.Ground,
-      CellType.Fire,
-      CellType.Uranium
-    ];
+
 
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
-        //const type = CELL_TYPES[~~(Math.random() * CELL_TYPES.length)]
-        const type = Math.random() > 0.5 ? CellType.Air : CellType.Ground;
-        this.cells.push(new Cell(type, x , y ));
+        const cell = this.initCell(x, y);
+        this.cells.push(cell);
       }
     }
 
@@ -40,6 +43,12 @@ export class Universe {
     if (this.rick && firstAirCell) {
       this.rick.goToCell(firstAirCell.x, firstAirCell.y);
     }
+  }
+
+  protected initCell(x: number, y: number): Cell {
+        // const type = CELL_TYPES[~~(Math.random() * CELL_TYPES.length)]
+        const type = Math.random() > 0.5 ? CellType.Air : CellType.Ground;
+      return new Cell(type, x , y );
   }
 
   public render(ctx: CanvasRenderingContext2D) {
@@ -65,9 +74,17 @@ export class Universe {
 
 
       if (rickCell.type !== CellType.Air) {
-        // ???
-        console.log('it is not AIR!!!');
+        const mn = this.mn(rickCell.x, rickCell.y);
+        const nearestAirCell = mn.find(cell => {          
+          return cell.type === CellType.Air;
+        });
+        if(nearestAirCell) {
+          this.rick.goToCell(nearestAirCell.x, nearestAirCell.y);
+        } else {
+          // ???
+          console.log('it is not AIR!!!');
 
+        }
       }
     } catch (e) {
       //console.error(e);

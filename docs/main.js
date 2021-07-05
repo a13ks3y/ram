@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\06670\js\ram\src\main.ts */"zUnb");
+module.exports = __webpack_require__(/*! /Users/oleksiismirnov/Documents/js/ram/src/main.ts */"zUnb");
 
 
 /***/ }),
@@ -509,6 +509,8 @@ __webpack_require__.r(__webpack_exports__);
 
 class AudioService {
     constructor() {
+        // @todo: make private? intorduce getter/setter? controll over UI/congig/both?
+        this.muted = true;
         this.tracks = [
             {
                 name: 'portal-gun',
@@ -518,6 +520,8 @@ class AudioService {
     }
     // todo: unit-test it!
     play(trackName) {
+        if (this.muted)
+            return Promise.resolve({ endPromise: Promise.resolve() });
         const trackElement = document.getElementById(`audio-${trackName}`);
         if (!trackElement)
             throw new Error(`No element with id: audio-${trackName}`);

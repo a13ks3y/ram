@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\06670\js\ram\src\styles.less */"OW3D");
+module.exports = __webpack_require__(/*! /Users/oleksiismirnov/Documents/js/ram/src/styles.less */"OW3D");
 
 
 /***/ }),

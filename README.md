@@ -1,4 +1,4 @@
-# Ram
+# 🦠 Rick And ~~Morty~~ Multiverse 🦠
 Inspired by "Rick and Morty" show.
 ## Rick And Multiverse Platform Game
 

@@ -7,6 +7,13 @@ The game is a multiverse, where each universe created 'on demand'
 Each universe is a set of states, each state representing
 all sub-states of all universe objects, including Rick.
 
+### Notice:
+
+    Game is not about particular Rick, 
+    it's more likely about "Rick" as a "concept". 
+    You're controlling Rick(s) in the game,
+    as much as Rick(s) controls you.
+
 Rick has a Portal Gun, which can make classic "Portal2-like" portals,
 to travel in x or y directions, and also can make multiverse portals
 to travel between universes (z axis). Multiverse travels could be time-shifted,

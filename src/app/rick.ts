@@ -1,34 +1,34 @@
-import {Cell} from "./cell";
-import {AudioService} from "./audio.service";
+import {Cell} from './cell';
+import {AudioService} from './audio.service';
 export class Rick {
-  private portalZoom: number = 0.1;
-  private portalX: number;
-  private lastPortalUse: number = 0;
-  private jumpDy: number;
-  private jumpStartY: number;
   // todo do not use angular injection here, use regular object passed from universe and screen component, create interface
   constructor(private audioService: AudioService) {}
-  static SIZE = Cell.CELL_WIDTH / 4
-  state: string = 'idle'
-  dx: number = 0
-  dy: number = 0
-  x: number = 0
-  y: number = 0
-  render(ctx: CanvasRenderingContext2D) {
-    switch(this.state) {
+  static SIZE = Cell.CELL_WIDTH / 4;
+  private portalZoom = 0.1;
+  private portalX: number;
+  private lastPortalUse = 0;
+  private jumpDy: number;
+  private jumpStartY: number;
+  state = 'idle';
+  dx = 0;
+  dy = 0;
+  x = 0;
+  y = 0;
+  render(ctx: CanvasRenderingContext2D): void {
+    switch (this.state) {
       case 'idle': this.renderIdle(ctx); break;
       case 'portal': this.renderPortal(ctx); break;
       case 'portal_idle':  this.renderIdle(ctx); this.renderPortal(ctx); break;
       case 'falling': case 'jumping': this.renderFalling(ctx); break;
     }
   }
-  logic(dtt: number) {
+  logic(dtt: number): void {
     const nx = this.dx * dtt;
     const ny = this.dy * dtt;
 
     this.x += this.dx / dtt;
     this.y += this.dy / dtt;
-    
+
     const featureBottomCell = 'todo';
     switch (this.state) {
       case 'portal':
@@ -41,7 +41,7 @@ export class Rick {
       case 'portal_idle':
         break;
       case 'falling':
-        
+
         break;
       case 'jumping':
         if (this.jumpStartY - this.y > Rick.SIZE * 8) {
@@ -51,14 +51,14 @@ export class Rick {
     }
   }
 
-  setStateIdle() {
+  setStateIdle(): void {
     this.state = 'idle';
     this.portalZoom = 0;
     this.dx = 0;
     this.dy = 0;
   }
 
-  portalOut(destX: number = this.x, destY: number = this.y) {
+  portalOut(destX: number = this.x, destY: number = this.y): Promise<void> {
 
     if (Date.now() - this.lastPortalUse >= 5000) {
       this.hide();
@@ -71,14 +71,14 @@ export class Rick {
         this.portalX = this.x;
         result.endPromise.then(() => {
           this.setStateIdle();
-        })
+        });
       });
     } else {
       return Promise.reject('Recharging!');
     }
   }
 
-  private renderIdle(ctx: CanvasRenderingContext2D) {
+  private renderIdle(ctx: CanvasRenderingContext2D): void {
     const SIZE = Rick.SIZE;
     const x = this.x;
     const y = this.y;
@@ -94,42 +94,46 @@ export class Rick {
     ctx.fillRect(x + SIZE / 8, y + SIZE * 3,   SIZE / 2 + SIZE / 4, SIZE / 4);
   }
 
-  private renderPortal(ctx: CanvasRenderingContext2D) {
+  private renderPortal(ctx: CanvasRenderingContext2D): void {
     ctx.fillStyle = '#0f0';
-    //ctx.fillRect(this.portalX - Rick.SIZE / 8, this.y - Rick.SIZE / 4, Rick.SIZE * 2, this.portalZoom / 2);
+    // ctx.fillRect(this.portalX - Rick.SIZE / 8, this.y - Rick.SIZE / 4, Rick.SIZE * 2, this.portalZoom / 2);
     ctx.beginPath();
-    ctx.ellipse(this.portalX, this.y + Rick.SIZE * 2, Rick.SIZE * this.portalZoom, Rick.SIZE / 2,  90 * Math.PI/180, 0, 2 * Math.PI);
+    ctx.ellipse(this.portalX, this.y + Rick.SIZE * 2, Rick.SIZE * this.portalZoom, Rick.SIZE / 2,  90 * Math.PI / 180, 0, 2 * Math.PI);
     ctx.fill();
   }
 
-  hide() {
+  hide(): void {
     this.state = 'hidden';
   }
 
-  goToCell(x: number, y: number) {
+  goToCell(x: number, y: number): void {
     this.x = x;
     this.y = y;
   }
 
-  private renderFalling(ctx: CanvasRenderingContext2D) {
+  private renderFalling(ctx: CanvasRenderingContext2D): void {
     this.renderIdle(ctx);
-    ctx.fillStyle = ['#fff', '#bbb', '#ccc', '#eee'][~~(Math.random()*4)];
-    const COUNT = ~~(Math.random() * 10);
+    ctx.fillStyle = ['#fff', '#bbb', '#ccc', '#eee'][Math.floor(Math.random() * 4)];
+    const COUNT = Math.floor(Math.random() * 10);
     for (let i = 0; i < COUNT; i++) {
-      ctx.fillRect(this.x + ~~(Math.random() * i), this.y + ~~(Math.random() * i), 1, 1);
+      ctx.fillRect(
+        this.x + Math.floor(Math.random() * i),
+        this.y + Math.floor(Math.random() * i),
+        1,
+        1
+      );
     }
   }
 
-  setStateFalling() {
+  setStateFalling(): void {
     this.state = 'falling';
     this.dy = 9;
   }
-
-  multiply(numberA: number, numberB: number) {
-    return numberA*numberB;
+  multiply(numberA: number, numberB: number): number {
+    return numberA * numberB;
   }
-
-  jump() {
+  // todo: return jump ending promise?
+  jump(): void {
     this.state = 'jumping';
     this.jumpDy = this.dy;
     this.jumpStartY = this.y;

@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class AudioService {
 
-  // @todo: make private? intorduce getter/setter? controll over UI/congig/both?
-  muted: boolean = true;
+  // @todo: make private? introduce getter/setter? control over UI/config/both?
+  muted = true;
   readonly tracks: { name: string, url: string }[] = [
     {
       name: 'portal-gun',
@@ -16,11 +16,11 @@ export class AudioService {
   constructor() { }
   // todo: unit-test it!
   play(trackName: string): Promise<{endPromise: Promise<void>}> {
-    if (this.muted) return Promise.resolve({endPromise: Promise.resolve()});
+    if (this.muted) { return Promise.resolve({endPromise: Promise.resolve()}); }
     const trackElement = document.getElementById(`audio-${trackName}`) as HTMLAudioElement;
-    if (!trackElement) throw  new Error(`No element with id: audio-${trackName}`);
+    if (!trackElement) { throw  new Error(`No element with id: audio-${trackName}`); }
     const startPromise = new Promise<{endPromise: Promise<void>}>((startResolve) => {
-      trackElement && trackElement.play().then(() => {
+      trackElement.play().then(() => {
         const endPromise = new Promise<void>((endResolve) => {
           setTimeout(() => {
             trackElement.pause();

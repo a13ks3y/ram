@@ -1,5 +1,5 @@
 import { Universe } from './universe';
-import {TestBed} from "@angular/core/testing";
+import {TestBed} from '@angular/core/testing';
 
 describe('Universe', () => {
   const WIDTH = 128;
@@ -23,22 +23,23 @@ describe('Universe', () => {
   });
   it('getCell should return cell with specific coordinates', () => {
     // arrange
-    const expectedX = 0, expectedY = 0;
+    const expectedX = 0;
+    const expectedY = 0;
     // act
     const cell = universe.getCell(expectedX, expectedY);
-    //assert
+    // assert
     expect(cell).toBeTruthy();
     expect(cell.x).toEqual(expectedX);
     expect(cell.y).toEqual(expectedY);
   });
   it('mn should return Moore neighborhood', () => {
-    const mn = universe.mn(1,1);
+    const mn = universe.mn(1, 1);
     expect(mn).toBeDefined();
-    //expect(mn.length).toEqual(8);
+    // expect(mn.length).toEqual(8);
     expect(mn[0].x).toEqual(0);
     expect(mn[0].y).toEqual(0);
     expect(mn[1].x).toEqual(1);
     expect(mn[1].y).toEqual(0);
   });
-  
+
 });
